@@ -60,36 +60,13 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
   return DomoModel.find(search).select('name age icon class').exec(callback);
 };
 
-const FindCharacter = (req, res) => {
+const FindCharacter = (realm, name) => {
   //let search = blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' })
   //console.log(search);
-  console.log(blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' }))
-  console.log('AGE: '+req.body.age);
-  console.log('NAME: '+req.body.name);
-  return blizzard.wow.character(['profile'], { origin: 'us', realm: req.body.age , name: req.body.name });
-  
-  /*search.then(response => {
-    //success
-    res.writeHead(200, { "Content-Type": "application/json"});
-    //stringify json to make it valid for HTTP  
-    res.write(JSON.stringify(response.data));
-    //send response to client
-    res.end();
-    console.log(response.data);
-  });
-
-  //catch errors thrown from blizz 
-  search.catch(function (err) {
-    console.error(err);
-  
-    //write error message for client
-    var responseMessage = {
-      error: "Could not find character"
-    }
-    res.writeHead(400, { "Content-Type": "application/json"});
-    res.write(JSON.stringify(responseMessage));
-    res.end();
-  }); */
+  //console.log(blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' }))
+  //console.log('AGE: '+req.body.age);
+  //console.log('NAME: '+req.body.name);
+  return blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
 }
 
 DomoModel = mongoose.model('Domo', DomoSchema);

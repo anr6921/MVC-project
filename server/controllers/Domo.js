@@ -92,14 +92,16 @@ const saveCharacter = (req, res, result) => {
   return domoPromise;
 };
 
-
+// Check that data has been entered correctly by user.
+// Makes call to function to recieve data from API & writes response to head
+// if new character, save. else search for character stats to display
 const makeDomo = (req, res) => {
   if (!req.body.name || !req.body.age) {
     return res.status(400).json({ error: 'both name and realm required' });
   }
   //console.dir(res);
 
-  const search = Domo.FindCharacter(req, res);
+  const search = Domo.FindCharacter(req.body.age, req.body.name);
   
   search.then(response => {
     res.writeHead(200, { "Content-Type": "application/json"});
@@ -107,7 +109,7 @@ const makeDomo = (req, res) => {
     res.write(JSON.stringify(response.data));
     //send response to client
     res.end();
-  
+    
     return saveCharacter(req, res, JSON.stringify(response.data));
   });
   //search.then(() => res.json({redirect: '/maker'}));
@@ -121,37 +123,7 @@ const makeDomo = (req, res) => {
     return res.status(400).json({ error: 'an error has occured' });
   });
 
-  /*
-  const domoData = {
-    name: req.body.name,
-    age: req.body.age,
-    owner: req.session.account._id,
-  };*/
-
-  
-  
   return search;
-
-  //let character = findCharacter(req.body.name, 'Proudmoore', 'US');
-
-  //console.log(character);
-  
-  /*
-  const newDomo = new Domo.DomoModel(domoData);
-
-  const domoPromise = newDomo.save();
-
-  domoPromise.then(() => res.json({ redirect: '/maker' }));
-
-  domoPromise.catch((err) => {
-    console.log(err);
-    if (err.code === 11000) {
-      return res.status(400).json({ error: 'You already have this character saved.' });
-    }
-
-    return res.status(400).json({ error: 'an error has occured' });
-  });*/
-  //return domoPromise;
 };
 
 const getDomos = (request, response) => {
@@ -168,6 +140,38 @@ const getDomos = (request, response) => {
   });
 };
 
+/*
+const searchCharacter = (realm, name) => {
+
+  console.log('realm: '+realm);
+  console.log('name: '+name);
+  const search = Domo.FindCharacter(realm, name);
+  
+  search.then(response => {
+    res.writeHead(200, { "Content-Type": "application/json"});
+    //stringify json for HTTP  
+    res.write(JSON.stringify(response.data));
+    //send response to client
+    res.end();
+    
+    return JSON.stringify(response.data);
+  });
+  //search.then(() => res.json({redirect: '/maker'}));
+
+  //catch errors thrown from blizzard api call
+  search.catch((err) => {
+    console.log(err);
+    res.writeHead(400, { "Content-Type": "application/json"});
+    //res.write(JSON.stringify(response));
+    res.end();
+    return res.status(400).json({ error: 'an error has occured' });
+  });
+
+  return search;
+};*/
+
+
+//module.exports.searchCharacter = searchCharacter;
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
 module.exports.make = makeDomo;

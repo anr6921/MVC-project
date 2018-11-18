@@ -20,42 +20,15 @@ var handleSignup = function handleSignup(e) {
     return false;
 };
 
-var LoginWindow = function LoginWindow(props) {
+var OverviewWindow = function OverviewWindow(props) {
     return React.createElement(
         "div",
         { id: "landingContainer" },
+        React.createElement("img", { src: "http://render-us.worldofwarcraft.com/character/", alt: "domo face", "class": "domoFace" }),
         React.createElement(
             "h1",
-            { id: "title" },
-            "Quester"
-        ),
-        React.createElement(
-            "div",
-            { id: "loginContainer" },
-            React.createElement(
-                "form",
-                { id: "loginForm",
-                    name: "loginForm",
-                    onSubmit: handleLogin,
-                    action: "/login",
-                    method: "POST",
-                    className: "mainForm"
-                },
-                React.createElement(
-                    "label",
-                    { htmlFor: "username" },
-                    "Username: "
-                ),
-                React.createElement("input", { id: "user", type: "text", name: "username", placeholder: "username" }),
-                React.createElement(
-                    "label",
-                    { htmlFor: "pass" },
-                    "Password: "
-                ),
-                React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "password" }),
-                React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-                React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign in" })
-            )
+            { "class": props.class },
+            props.name
         )
     );
 };
@@ -204,7 +177,7 @@ var DomoList = function DomoList(props) {
                 "No Domos yeet"
             )
         );
-    }
+    };
 
     var domoNodes = props.domos.map(function (domo) {
         return React.createElement(

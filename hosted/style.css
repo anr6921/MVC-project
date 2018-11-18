@@ -8,6 +8,15 @@ html, body {
     font-family: 'Raleway', sans-serif;
 }
 
+.outerFlex{
+    display: flex;
+    flex-direction: row;
+}
+
+.innerFlex{
+    
+}
+
 /* Colors for classes */
 .Warrior {
     color:#C79C6E;

@@ -17,7 +17,7 @@ const handleDomo = (e) => {
 };
 
 const DomoForm = (props) => {
-    return (
+    return ( 
         <form id="domoForm"
             onSubmit={handleDomo}
             name="domoForm"
@@ -42,7 +42,7 @@ const DomoList = function(props) {
                 <h3 className="emptyDomo">No Domos yeet</h3>
             </div>
         );
-    }
+    };
 
     const domoNodes = props.domos.map(function(domo) {
         return (

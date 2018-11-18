@@ -5,6 +5,71 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+  <script>
+  
+    // toggle character content display
+    function display(id) {
+    console.log(id);
+      var content = document.getElementById(id);
+      if(content.style.display === "none"){
+        content.style.display = "block";
+
+      }else{
+        content.style.display = "none";
+      }
+    };
+
+
+    // handle saved character selection
+    function radioClick(){
+      var radios = document.getElementsByName('radio');
+
+      for (var i = 0, length = radios.length; i < length; i++){
+        if (radios[i].checked){
+          var radioValue = $("input[name='radio']:checked").val();
+          console.log(radioValue);
+          var radioId = $("input[name='radio']:checked").attr('id');
+          console.log(radioId);
+          setupCharacter(radioId, radioValue);
+          break;
+        }
+      };
+    };
+
+    function setupCharacter(name, realm){
+     /*
+      var overview = document.getElementById("overview");
+      overview.innerHTML =  '<img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/><h1 class="characterName">'name'</h1>';
+      //document.getElementById("overview").innerHTML = 
+      '<img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/><h1 class="characterName">'name'</h1>';
+      //document.getElementById("raid").innerHTML = "Paragraph changed!";
+      //document.getElementById("pvp").innerHTML = "Paragraph changed!";*/
+    };
+/*
+    function getCharacter(name, realm){
+      const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
+      const results = blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
+      search.then(response => {
+        res.writeHead(200, { "Content-Type": "application/json"});
+        //stringify json for HTTP  
+        res.write(JSON.stringify(response.data));
+        //send response to client
+        res.end();
+        
+        return JSON.stringify(response.data);
+      });
+      //search.then(() => res.json({redirect: '/maker'}));
+
+      //catch errors thrown from blizzard api call
+      search.catch((err) => {
+          console.log(err);
+          res.writeHead(400, { "Content-Type": "application/json"});
+          res.write(JSON.stringify(response));
+          res.end();
+          return res.status(400).json({ error: 'an error has occured' });
+      });
+    };*/
+  </script>
 </head>
 <body>
   <nav id="navbar">
@@ -16,8 +81,8 @@
     </ul>
     
   </nav>
-  
-  <section id="characters">
+  <div class="outerFlex">
+  <section id="characters" class="innerFlex">
  
       {{#if domos}}
         <ul>
@@ -28,7 +93,7 @@
               <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
             </div>
             <div class="textDiv">
-              <h3 class="characterName {{this.class}}">{{this.name}}</h3>
+              <h3 class="characterName {{this.class}}">{{this.name}}<input onclick="radioClick()" type="radio" name="radio" id={{this.name}} value={{this.age}} ></h3>
               <h3 class="characterLevel">{{this.age}}</h3>
             </div>
           </li>
@@ -52,6 +117,33 @@
     </form>
   </section>
   </section>
+
+  <section id="characterInfo" class="innerFlex">
+    <div id="characterInfoNav">
+      <button class="innerNav" id="overviewBtn" onclick="display('overview')">Overview</button>
+      <button class="innerNav" id="raidBtn" onclick="display('raid')">Raid Progression</button>
+      <button class="innerNav" id="pvpBtn" onclick="display('pvp')">PVP</button>
+    </div>
+    <div id="characterInfoContent">
+      <div id="overview" style="display: none;">
+        <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
+        <h1 class="characterName {{search.class}}">{{search.name}}</h1>
+
+      </div>
+      <div id="raid" style="display: none;">
+        <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
+        <h1 class="characterName {{search.class}}">{{search.name}}</h1>
+
+      </div>
+      <div id="pvp" style="display: none;">
+        <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
+        <h1 class="characterName {{search.class}}">{{search.name}}</h1>
+
+      </div>
+    </div>
+  </section>
+  </div>
+
 
   <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
     <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
