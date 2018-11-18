@@ -26,11 +26,13 @@ const DomoSchema = new mongoose.Schema({
   icon: {
     type: String,
     trim: true,
+    required: true,
   },
 
   class: {
     type: String,
     trim: true,
+    required: true,
   },
 
   owner: {
@@ -55,14 +57,16 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return DomoModel.find(search).select('name age').exec(callback);
+  return DomoModel.find(search).select('name age icon class').exec(callback);
 };
 
-const FindCharacter = (req, res, name, origin, realm) => {
+const FindCharacter = (req, res) => {
   //let search = blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' })
   //console.log(search);
   console.log(blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' }))
-  return blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' });
+  console.log('AGE: '+req.body.age);
+  console.log('NAME: '+req.body.name);
+  return blizzard.wow.character(['profile'], { origin: 'us', realm: req.body.age , name: req.body.name });
   
   /*search.then(response => {
     //success

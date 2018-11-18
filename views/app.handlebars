@@ -16,20 +16,7 @@
     </ul>
     
   </nav>
-  <section id="addCharacter">
-    <form id="domoForm" name="domoForm" action="/maker" method="POST" class="domoForm">
-      <div id="searchCharacterName">
-        <label for="name">Name: </label>
-        <input id="domoName" type="text" name="name" placeholder="Character"/>  
-      </div>
-      <div id="searchCharacterRealm">
-        <label for="age">Age: </label>
-        <input id="domoAge" type="text" name="age" placeholder="Realm"/>
-      </div>
-      <input type="hidden" name="_csrf" value={{csrfToken}} />
-      <input class="makeDomoSubmit" type="submit" value="Add Character" />
-    </form>
-  </section>
+  
   <section id="characters">
  
       {{#if domos}}
@@ -38,20 +25,34 @@
 
           <li class="character">
             <div class="imgDiv">
-              <img src="/assets/img/domoface.jpeg" alt="domo face" class="domoFace"/>
+              <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
             </div>
             <div class="textDiv">
-              <h3 class="characterName">Name: {{this.name}}</h3>
-              <h3 class="characterLevel">Level: {{this.age}}</h3>
+              <h3 class="characterName {{this.class}}">{{this.name}}</h3>
+              <h3 class="characterLevel">{{this.age}}</h3>
             </div>
           </li>
         {{/each}}
         </ul>
       {{else}}
-       <h3 class="emptyDomo">No Characters yet</h3>
+       <h3 class="emptyDomo">No characters saved</h3>
       {{/if}}
-   
+    <section id="addCharacter">
+    <form id="domoForm" name="domoForm" action="/maker" method="POST" class="domoForm">
+      <div id="searchCharacterName">
+        <label for="name">Name: </label>
+        <input id="domoName" type="text" name="name" placeholder="Character"/>  
+      </div>
+      <div id="searchCharacterRealm">
+        <label for="age">Realm: </label>
+        <input id="domoAge" type="text" name="age" placeholder="Realm"/>
+      </div>
+      <input type="hidden" name="_csrf" value={{csrfToken}} />
+      <input class="makeDomoSubmit" type="submit" value="Add Character" />
+    </form>
   </section>
+  </section>
+
   <div id="domoMessage"><img id="speech" src="/assets/img/speech.png" alt="speech box"/>
     <h3><span id="errorMessage"></span></h3><img id="domo" src="assets/img/domo.png" alt="domo"/>
   </div>

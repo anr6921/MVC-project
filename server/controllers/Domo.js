@@ -36,11 +36,40 @@ const saveCharacter = (req, res, result) => {
   console.log("data: "+data);
   console.dir(data);
 
+  var memClass;
+  switch(data.class){
+    case 0: break;
+    case 1: memClass="Warrior";
+        break;
+    case 2: memClass="Paladin";
+        break;
+    case 3: memClass="Hunter";
+        break;
+    case 4: memClass="Rogue";
+        break;
+    case 5: memClass="Priest";
+        break;
+    case 6: memClass="DeathKnight";
+        break;
+    case 7: memClass="Shaman";
+        break;
+    case 8: memClass="Mage";
+        break;
+    case 9: memClass="Warlock";
+        break;
+    case 10: memClass="Monk";
+        break;
+    case 11: memClass="Druid";
+        break;
+    case 12: memClass="DemonHunter";
+        break;
+  } 
+
   const domoData = {
     name: data.name,
     age: data.realm,
     icon: data.thumbnail,
-    class: data.class,
+    class: memClass,
     owner: req.session.account._id,
   };
 
@@ -68,8 +97,9 @@ const makeDomo = (req, res) => {
   if (!req.body.name || !req.body.age) {
     return res.status(400).json({ error: 'both name and realm required' });
   }
+  //console.dir(res);
 
-  const search = Domo.FindCharacter(req, res, res.name, 'us', res.age);
+  const search = Domo.FindCharacter(req, res);
   
   search.then(response => {
     res.writeHead(200, { "Content-Type": "application/json"});
@@ -86,16 +116,17 @@ const makeDomo = (req, res) => {
   search.catch((err) => {
     console.log(err);
     res.writeHead(400, { "Content-Type": "application/json"});
-    res.write(JSON.stringify(responseMessage));
+    //res.write(JSON.stringify(response));
     res.end();
     return res.status(400).json({ error: 'an error has occured' });
   });
 
+  /*
   const domoData = {
     name: req.body.name,
     age: req.body.age,
     owner: req.session.account._id,
-  };
+  };*/
 
   
   
@@ -120,7 +151,7 @@ const makeDomo = (req, res) => {
 
     return res.status(400).json({ error: 'an error has occured' });
   });*/
-  return domoPromise;
+  //return domoPromise;
 };
 
 const getDomos = (request, response) => {
@@ -132,7 +163,7 @@ const getDomos = (request, response) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred'});
     }
-
+    console.dir(domos.docs);
     return res.json({ domos: docs });
   });
 };
