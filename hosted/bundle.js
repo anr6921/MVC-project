@@ -119,7 +119,7 @@ var handleSearch = function handleSearch(e) {
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
     if ($("#user").val() == '' || $("#pass").val() == '') {
-        handleError("RAWR!! cannot search");
+        handleError("Cannot search");
         return false;
     }
 
@@ -241,6 +241,16 @@ var PasswordChange = function PasswordChange(props) {
             method: "POST",
             className: "passwordForm"
         },
+        React.createElement(
+            "h2",
+            null,
+            "Change Password"
+        ),
+        React.createElement(
+            "a",
+            { "class": "close", href: "#" },
+            "\xD7"
+        ),
         React.createElement(
             "label",
             { htmlFor: "username" },

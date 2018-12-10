@@ -15,8 +15,8 @@ const router = (app) => {
   app.get('/searchCharacter', mid.requiresLogin, controllers.Domo.makerPage);
   app.post('/searchCharacter', mid.requiresLogin, controllers.Domo.searchCharacter);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+  app.get('*', controllers.Domo.notFound);
 };
 
-const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
 module.exports = router;
-module.exports.blizzard = blizzard;
+

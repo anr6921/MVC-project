@@ -280,6 +280,10 @@ const parseSearchCharacter = (req, res, result) => {
   return res.json({ redirect: '/maker' });
 };
 
+// redirect to 404
+const notFound = (req, res) => {
+  res.render('notFound', {csrfToken:req.csrfToken()});
+};
 
 
 //module.exports.searchCharacter = searchCharacter;
@@ -287,3 +291,4 @@ module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
 module.exports.make = makeDomo;
 module.exports.searchCharacter = searchCharacter;
+module.exports.notFound = notFound;

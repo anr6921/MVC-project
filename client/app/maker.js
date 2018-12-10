@@ -84,7 +84,7 @@ const handleSearch = (e) => {
     $("#domoMessage").animate({width:'hide'}, 350);
 
     if($("#user").val() == '' || $("#pass").val() == ''){
-        handleError("RAWR!! cannot search");
+        handleError("Cannot search");
         return false;
     }
 
@@ -182,24 +182,23 @@ const createOverview3 = (csrf) => {
 const PasswordChange = (props) => {
     console.log('in react component');
     return(
-        
-            <form id="passwordForm" 
-                name="passwordForm"
-                onSubmit={handlePasswordChange}
-                action="/changePassword"
-                method="POST"
-                className="passwordForm"
-                >
-                <label htmlFor="username">Username: </label>   
-                <input id="user" type="text" name="username" placeholder="username"/>
-                <label htmlFor="pass">New password: </label>
-                <input id="pass" type="password" name="pass" placeholder="new password"/>
-                <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
-                <input type="hidden" name="_csrf" value={props.csrf}/>
-                <input className="formSubmit" type="submit" value="Submit"/>
-            
-            </form>
-       
+        <form id="passwordForm" 
+            name="passwordForm"
+            onSubmit={handlePasswordChange}
+            action="/changePassword"
+            method="POST"
+            className="passwordForm"
+            >
+            <h2>Change Password</h2>
+            <a class="close" href="#">&times;</a>
+            <label htmlFor="username">Username: </label>   
+            <input id="user" type="text" name="username" placeholder="username"/>
+            <label htmlFor="pass">New password: </label>
+            <input id="pass" type="password" name="pass" placeholder="new password"/>
+            <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
+            <input type="hidden" name="_csrf" value={props.csrf}/>
+            <input className="formSubmit" type="submit" value="Submit"/>
+        </form>   
     );
 };
 
