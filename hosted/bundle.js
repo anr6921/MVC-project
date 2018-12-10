@@ -229,11 +229,88 @@ var createOverview3 = function createOverview3(csrf) {
     ReactDOM.render(React.createElement(OverviewForm3, { csrf: csrf }), document.querySelector("#characterInfoContent"));
 };
 
+// Change password modal
+var SignupWindow = function SignupWindow(props) {
+    React.createElement(
+        "h1",
+        { id: "title" },
+        "Quester"
+    );
+    return React.createElement(
+        "div",
+        { id: "landingContainer" },
+        React.createElement(
+            "h3",
+            null,
+            "Change Password"
+        ),
+        React.createElement(
+            "a",
+            { "class": "close", href: "#" },
+            "\xD7"
+        ),
+        React.createElement(
+            "div",
+            { id: "loginContainer" },
+            React.createElement(
+                "form",
+                { id: "signupForm",
+                    name: "signupForm",
+                    onSubmit: handleSignup,
+                    action: "/signup",
+                    method: "POST",
+                    className: "mainForm"
+                },
+                React.createElement(
+                    "label",
+                    { htmlFor: "pass" },
+                    "New password: "
+                ),
+                React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "password" }),
+                React.createElement(
+                    "label",
+                    { htmlFor: "pass2" },
+                    "Retype new password: "
+                ),
+                React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+                React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign up" })
+            )
+        )
+    );
+};
+
+// change password handler
+var handleSignup = function handleSignup(e) {
+    e.preventDefault();
+
+    $("#domoMessage").animate({ width: 'hide' }, 350);
+
+    if ($("#pass").val() == '' || $("#pass2").val() == '') {
+        handleError("All fields are required");
+        return false;
+    }
+
+    if ($("#pass").val() !== $("#pass2").val()) {
+        handleError("Passwords do not match");
+        return false;
+    }
+
+    sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+
+    return false;
+};
+
+var createSignupWindow = function createSignupWindow(csrf) {
+    ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#changePassContent"));
+};
+
 // Render components: add character form, character list, overview, raid progression, pvp
 var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#addCharacter"));
 
     ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
+
+    createSignupWindow(csrf);
 
     var overviewBtn1 = document.querySelector("#overviewBtn1");
     var overviewBtn2 = document.querySelector("#overviewBtn2");

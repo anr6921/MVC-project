@@ -15,7 +15,7 @@
   
   <script type="module">
     
-    const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
+    //const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
     //import {blizzard} from './server/router';
     //import {findCharacter} from './server/models/Domo.js';
     // toggle character content display
@@ -90,12 +90,19 @@
         <!--<p class="title">Quester</p></a>-->
         </li> 
       <li><div class="navlink"><a href="/logout">Log out</a></div></li>
-      <li><div class="changePass">Change Password</div></li>
+      <li><div class="navlink"><a href="#changePassModal">Change Password</a></div></li>
     </ul>
     
   </nav>
   <section id="content"></section>
   <div class="outerFlex">
+    <div id="changePassModal" class="overlay">
+      <div id="changePassContent" class="popup">
+        <h3>Change Password</h3>
+        <a class="close" href="#">&times;</a>
+
+      </div>
+    </div>
     <div id="characters" class="innerFlex">
     <section id="domos">
 

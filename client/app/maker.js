@@ -178,6 +178,61 @@ const createOverview3 = (csrf) => {
     );
 };
 
+// Change password modal
+const SignupWindow = (props) => {
+    <h1 id="title">Quester</h1>
+    return(
+        <div id="landingContainer">
+        <h3>Change Password</h3>
+        <a class="close" href="#">&times;</a>
+        <div id="loginContainer">
+            <form id="signupForm" 
+                name="signupForm"
+                onSubmit={handleSignup}
+                action="/signup"
+                method="POST"
+                className="mainForm"
+                >
+                <label htmlFor="pass">New password: </label>
+                <input id="pass" type="password" name="pass" placeholder="password"/>
+                <label htmlFor="pass2">Retype new password: </label>
+                <input type="hidden" name="_csrf" value={props.csrf}/>
+                <input className="formSubmit" type="submit" value="Sign up"/>
+            
+            </form>
+        </div>
+        </div>
+    );
+};
+
+// change password handler
+const handleSignup = (e) => {
+    e.preventDefault();
+
+    $("#domoMessage").animate({width:'hide'}, 350);
+
+    if($("#pass").val() == '' || $("#pass2").val() == ''){
+        handleError("All fields are required");
+        return false;
+    }
+
+    if($("#pass").val() !== $("#pass2").val()){
+        handleError("Passwords do not match");
+        return false;
+    }
+
+    sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+
+    return false;
+};
+
+const createSignupWindow = (csrf) => {
+    ReactDOM.render(
+        <SignupWindow csrf={csrf} />,
+        document.querySelector("#changePassContent")
+    );
+};
+
 // Render components: add character form, character list, overview, raid progression, pvp
 const setup = function(csrf) {
     ReactDOM.render(
@@ -187,6 +242,8 @@ const setup = function(csrf) {
     ReactDOM.render(
         <DomoList domos={[]} />, document.querySelector("#domos")
     );
+
+    createSignupWindow(csrf);
 
     const overviewBtn1 = document.querySelector("#overviewBtn1");
     const overviewBtn2 = document.querySelector("#overviewBtn2");
