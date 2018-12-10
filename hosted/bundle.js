@@ -230,62 +230,42 @@ var createOverview3 = function createOverview3(csrf) {
 };
 
 // Change password modal
-var SignupWindow = function SignupWindow(props) {
-    React.createElement(
-        "h1",
-        { id: "title" },
-        "Quester"
-    );
+var PasswordChange = function PasswordChange(props) {
+    console.log('in react component');
     return React.createElement(
-        "div",
-        { id: "landingContainer" },
+        "form",
+        { id: "passwordForm",
+            name: "passwordForm",
+            onSubmit: handlePasswordChange,
+            action: "/changePassword",
+            method: "POST",
+            className: "passwordForm"
+        },
         React.createElement(
-            "h3",
-            null,
-            "Change Password"
+            "label",
+            { htmlFor: "username" },
+            "Username: "
         ),
+        React.createElement("input", { id: "user", type: "text", name: "username", placeholder: "username" }),
         React.createElement(
-            "a",
-            { "class": "close", href: "#" },
-            "\xD7"
+            "label",
+            { htmlFor: "pass" },
+            "New password: "
         ),
-        React.createElement(
-            "div",
-            { id: "loginContainer" },
-            React.createElement(
-                "form",
-                { id: "signupForm",
-                    name: "signupForm",
-                    onSubmit: handleSignup,
-                    action: "/signup",
-                    method: "POST",
-                    className: "mainForm"
-                },
-                React.createElement(
-                    "label",
-                    { htmlFor: "pass" },
-                    "New password: "
-                ),
-                React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "password" }),
-                React.createElement(
-                    "label",
-                    { htmlFor: "pass2" },
-                    "Retype new password: "
-                ),
-                React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-                React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign up" })
-            )
-        )
+        React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "new password" }),
+        React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype password" }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+        React.createElement("input", { className: "formSubmit", type: "submit", value: "Submit" })
     );
 };
 
 // change password handler
-var handleSignup = function handleSignup(e) {
+var handlePasswordChange = function handlePasswordChange(e) {
     e.preventDefault();
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#pass").val() == '' || $("#pass2").val() == '') {
+    if ($("#username").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
         handleError("All fields are required");
         return false;
     }
@@ -295,13 +275,13 @@ var handleSignup = function handleSignup(e) {
         return false;
     }
 
-    sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+    sendAjax('POST', $("#passwordForm").attr("action"), $("#passwordForm").serialize(), redirect);
 
     return false;
 };
 
-var createSignupWindow = function createSignupWindow(csrf) {
-    ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#changePassContent"));
+var createPasswordChange = function createPasswordChange(csrf) {
+    ReactDOM.render(React.createElement(PasswordChange, { csrf: csrf }), document.querySelector("#changePassContent"));
 };
 
 // Render components: add character form, character list, overview, raid progression, pvp
@@ -310,7 +290,7 @@ var setup = function setup(csrf) {
 
     ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
 
-    createSignupWindow(csrf);
+    createPasswordChange(csrf);
 
     var overviewBtn1 = document.querySelector("#overviewBtn1");
     var overviewBtn2 = document.querySelector("#overviewBtn2");
@@ -324,8 +304,9 @@ var setup = function setup(csrf) {
 
     overviewBtn2.addEventListener("click", function (e) {
         //e.preventDefault();
-        createOverview2(csrf);
+        //createOverview2(csrf);
         // return false;
+        createPasswordChange(csrf);
     });
 
     overviewBtn3.addEventListener("click", function (e) {

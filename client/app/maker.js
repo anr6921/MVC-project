@@ -179,39 +179,37 @@ const createOverview3 = (csrf) => {
 };
 
 // Change password modal
-const SignupWindow = (props) => {
-    <h1 id="title">Quester</h1>
+const PasswordChange = (props) => {
+    console.log('in react component');
     return(
-        <div id="landingContainer">
-        <h3>Change Password</h3>
-        <a class="close" href="#">&times;</a>
-        <div id="loginContainer">
-            <form id="signupForm" 
-                name="signupForm"
-                onSubmit={handleSignup}
-                action="/signup"
+        
+            <form id="passwordForm" 
+                name="passwordForm"
+                onSubmit={handlePasswordChange}
+                action="/changePassword"
                 method="POST"
-                className="mainForm"
+                className="passwordForm"
                 >
+                <label htmlFor="username">Username: </label>   
+                <input id="user" type="text" name="username" placeholder="username"/>
                 <label htmlFor="pass">New password: </label>
-                <input id="pass" type="password" name="pass" placeholder="password"/>
-                <label htmlFor="pass2">Retype new password: </label>
+                <input id="pass" type="password" name="pass" placeholder="new password"/>
+                <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
                 <input type="hidden" name="_csrf" value={props.csrf}/>
-                <input className="formSubmit" type="submit" value="Sign up"/>
+                <input className="formSubmit" type="submit" value="Submit"/>
             
             </form>
-        </div>
-        </div>
+       
     );
 };
 
 // change password handler
-const handleSignup = (e) => {
+const handlePasswordChange = (e) => {
     e.preventDefault();
 
     $("#domoMessage").animate({width:'hide'}, 350);
 
-    if($("#pass").val() == '' || $("#pass2").val() == ''){
+    if($("#username").val() == '' || $("#pass").val() == '' || $("#pass2").val() == ''){
         handleError("All fields are required");
         return false;
     }
@@ -221,14 +219,14 @@ const handleSignup = (e) => {
         return false;
     }
 
-    sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+    sendAjax('POST', $("#passwordForm").attr("action"), $("#passwordForm").serialize(), redirect);
 
     return false;
 };
 
-const createSignupWindow = (csrf) => {
+const createPasswordChange = (csrf) => {
     ReactDOM.render(
-        <SignupWindow csrf={csrf} />,
+        <PasswordChange csrf={csrf} />,
         document.querySelector("#changePassContent")
     );
 };
@@ -243,7 +241,7 @@ const setup = function(csrf) {
         <DomoList domos={[]} />, document.querySelector("#domos")
     );
 
-    createSignupWindow(csrf);
+    createPasswordChange(csrf);
 
     const overviewBtn1 = document.querySelector("#overviewBtn1");
     const overviewBtn2 = document.querySelector("#overviewBtn2");
@@ -257,8 +255,9 @@ const setup = function(csrf) {
 
     overviewBtn2.addEventListener("click", (e) => {
         //e.preventDefault();
-        createOverview2(csrf);
+        //createOverview2(csrf);
        // return false;
+       createPasswordChange(csrf);
     });
 
     overviewBtn3.addEventListener("click", (e) => {
