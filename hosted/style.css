@@ -55,6 +55,40 @@ html, body {
     color:#9482C9;
 }
 
+/* Character info nav bar */
+#characterInfo{
+    padding-left: 20px;
+    min-width: 500px;
+}
+
+#characterInfoNav{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.innerNav{
+    transition: background-color 0.4s ease;
+    display: inline;
+    background-color: #373F51;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    margin-left: 95px;
+    margin-top: 10px;
+}
+
+/* Character components */
+#characterInfoContent{
+   padding-top: 20px;
+    color: white;
+}
+
+#form1-image{
+    min-height: 500px;
+    min-width:500px;
+    background-color: white;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -348,13 +382,13 @@ nav:nth-child(1) {
     transform: rotate(330deg);
 }
 
+
 #domos {
     width: 40%;
     min-width: 400px;
     border: 2px solid #373F51;
     border-radius: 4px;
     margin-left: 0%;
-    margin-top: 100px;
 }
 
 .domo {

@@ -64,8 +64,10 @@ const FindCharacter = (realm, name) => {
   //let search = blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' })
   //console.log(search);
   //console.log(blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' }))
-  //console.log('AGE: '+req.body.age);
-  //console.log('NAME: '+req.body.name);
+  console.log('in find character');
+  console.log('REALM: '+realm);
+  console.log('NAME: '+name);
+  
   return blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
 }
 

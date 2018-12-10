@@ -1,3 +1,4 @@
+/*
 const models = require('../models');
 const weasel = require('weasel.js'); // node wrapper to help with retrieving data from warcraft logs api
 
@@ -69,4 +70,4 @@ const getDomos = (request, response) => {
 
 module.exports.makerPage = makerPage;
 module.exports.getDomos = getDomos;
-module.exports.make = makeDomo;
+module.exports.make = makeDomo;*/

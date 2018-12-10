@@ -1,23 +1,36 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <title>DomoMaker</title>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <title>Quester</title>
+  <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
-  <script>
   
+  
+  <script type="module">
+    
+    const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
+    //import {blizzard} from './server/router';
+    //import {findCharacter} from './server/models/Domo.js';
     // toggle character content display
+    /*
     function display(id) {
-    console.log(id);
+      console.log(id);
       var content = document.getElementById(id);
+      
       if(content.style.display === "none"){
         content.style.display = "block";
 
       }else{
         content.style.display = "none";
       }
-    };
+    };*/
 
 
     // handle saved character selection
@@ -37,18 +50,17 @@
     };
 
     function setupCharacter(name, realm){
-     /*
-      var overview = document.getElementById("overview");
-      overview.innerHTML =  '<img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/><h1 class="characterName">'name'</h1>';
-      //document.getElementById("overview").innerHTML = 
-      '<img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/><h1 class="characterName">'name'</h1>';
-      //document.getElementById("raid").innerHTML = "Paragraph changed!";
-      //document.getElementById("pvp").innerHTML = "Paragraph changed!";*/
+        const characterData = getCharacter(name, realm);
+        console.dir(characterData);
+
+
     };
-/*
+
     function getCharacter(name, realm){
-      const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
-      const results = blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
+      //const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
+      //const results = blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
+      const search = findCharacter(name, realm);
+      console.dir(search);
       search.then(response => {
         res.writeHead(200, { "Content-Type": "application/json"});
         //stringify json for HTTP  
@@ -68,7 +80,7 @@
           res.end();
           return res.status(400).json({ error: 'an error has occured' });
       });
-    };*/
+    };
   </script>
 </head>
 <body>
@@ -78,14 +90,38 @@
         <!--<p class="title">Quester</p></a>-->
         </li> 
       <li><div class="navlink"><a href="/logout">Log out</a></div></li>
+      <li><div class="changePass">Change Password</div></li>
     </ul>
     
   </nav>
+  <section id="content"></section>
   <div class="outerFlex">
-  <section id="characters" class="innerFlex">
- 
-      {{#if domos}}
-        <ul>
+    <div id="characters" class="innerFlex">
+    <section id="domos">
+
+    </section>
+    <section id="addCharacter">
+
+    </section>
+  </div>
+  <section id="characterInfo" class="innerFlex">
+    <div id="characterInfoNav" method="POST">
+      
+      <button class="innerNav" id="overviewBtn1">Overview</button>
+      <button class="innerNav" id="overviewBtn2" onclick="">Raid Progression</button>
+      <button class="innerNav" id="overviewBtn3" onclick="">PVP</button>
+      
+      
+    </div>
+    <div id="characterInfoContent">
+      
+      <!--
+
+      <div id="overview" style="display: none;" class="characterInfoContainer">
+        <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
+        <h1 class="characterName {{search.class}}">{{search.name}}</h1>
+        {{#if domos}}
+        
         {{#each domos}}
 
           <li class="character">
@@ -98,48 +134,21 @@
             </div>
           </li>
         {{/each}}
-        </ul>
+        
       {{else}}
-       <h3 class="emptyDomo">No characters saved</h3>
+
       {{/if}}
-    <section id="addCharacter">
-    <form id="domoForm" name="domoForm" action="/maker" method="POST" class="domoForm">
-      <div id="searchCharacterName">
-        <label for="name">Name: </label>
-        <input id="domoName" type="text" name="name" placeholder="Character"/>  
       </div>
-      <div id="searchCharacterRealm">
-        <label for="age">Realm: </label>
-        <input id="domoAge" type="text" name="age" placeholder="Realm"/>
-      </div>
-      <input type="hidden" name="_csrf" value={{csrfToken}} />
-      <input class="makeDomoSubmit" type="submit" value="Add Character" />
-    </form>
-  </section>
-  </section>
-
-  <section id="characterInfo" class="innerFlex">
-    <div id="characterInfoNav">
-      <button class="innerNav" id="overviewBtn" onclick="display('overview')">Overview</button>
-      <button class="innerNav" id="raidBtn" onclick="display('raid')">Raid Progression</button>
-      <button class="innerNav" id="pvpBtn" onclick="display('pvp')">PVP</button>
-    </div>
-    <div id="characterInfoContent">
-      <div id="overview" style="display: none;">
+      <div id="raid" style="display: none;" class="characterInfoContainer">
         <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
         <h1 class="characterName {{search.class}}">{{search.name}}</h1>
 
       </div>
-      <div id="raid" style="display: none;">
+      <div id="pvp" style="display: none;" class="characterInfoContainer">
         <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
         <h1 class="characterName {{search.class}}">{{search.name}}</h1>
 
-      </div>
-      <div id="pvp" style="display: none;">
-        <img src="http://render-us.worldofwarcraft.com/character/{{this.icon}}" alt="domo face" class="domoFace"/>
-        <h1 class="characterName {{search.class}}">{{search.name}}</h1>
-
-      </div>
+      </div>-->
     </div>
   </section>
   </div>
