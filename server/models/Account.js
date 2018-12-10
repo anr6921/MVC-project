@@ -84,7 +84,6 @@ AccountModel.findByUsername(username, (err, doc) => {
 
 AccountSchema.statics.changePassword = (account, callback) =>
 AccountModel.findByUsername(account.username, (err, doc) => {
-
   if (err) {
     return callback;
   }
@@ -92,23 +91,21 @@ AccountModel.findByUsername(account.username, (err, doc) => {
   if (!doc) {
     return callback;
   }
-  
-    console.log('validating pw');
-    
-      AccountModel.update(
-        {
-          username: account.username
-        },
-        {
-          $set:
-          {
-            "password":account.password, salt: account.salt
-          },
-        },
+
+  AccountModel.update(
+    {
+      username: account.username,
+    },
+    {
+      $set:
+      {
+        password: account.password, salt: account.salt,
+      },
+    },
         callback
       );
-      return callback;
-})
+  return callback;
+});
 
 AccountModel = mongoose.model('Account', AccountSchema);
 

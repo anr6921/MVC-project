@@ -39,7 +39,7 @@ const DomoList = function(props) {
     if(props.domos.length === 0){
         return (
             <div className="domoList">
-                <h3 className="emptyDomo">No Domos yeet</h3>
+    
             </div>
         );
     };
@@ -52,7 +52,7 @@ const DomoList = function(props) {
                 </div>
                 <div className="textDiv">
                 
-                <h3 className="characterName" className={domo.class}>{domo.name}<input onClick={() => setupCharacter(domo.name, domo.age)} type="radio" name="radio" id={domo.name} value={domo.age}/></h3>
+                <h3 className="characterName" className={domo.class}>{domo.name}<input onclick="radioClick()" type="radio" name="radio" id={domo.name} value={domo.age} /></h3>
                 <h3 className="characterLevel">{domo.age}</h3>
                 </div>
             </li>
@@ -96,23 +96,16 @@ const handleSearch = (e) => {
     redirect({redirect:('/maker')});
     return false;
 };
+
 // FORM 1 ***
 // Return overview form 1
 const OverviewForm1 = (props) => {
-    console.log('in overview form1');
-    console.dir(props);
     return ( 
-        /*
-        <form id="domoForm" name="domoForm" action="/searchCharacter" method="POST" className="domoForm">
-            
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Add Character" />
-        </form>*/
         <form id="form1-character">
             <div id="form1-header" className="textDiv">
-                <h2 id="form1-characterName" className="characterName" className={props.class}>Character Name</h2>
-                <h3 id="form1-characterLevel" className="characterLevel">XXX CLASS</h3>
-                <h3 id="form1-characterRealm" className="characterRealm">REALM</h3>
+                <h2 id="form-characterName" className="characterName" className={props.class}>Character Name</h2>
+                <h3 id="form-characterLevel" className="characterLevel">XXX CLASS</h3>
+                <h3 id="form-characterRealm" className="characterRealm">REALM</h3>
             </div>
             <div id="form1-image" className="imgDiv">
             </div> 
@@ -120,28 +113,26 @@ const OverviewForm1 = (props) => {
     );
 };
 
-// render character overview form 1
+// Render character overview form 1
 const createOverview1 = (csrf) => {
-    //sendAjax('POST', '/searchCharacter', null, (data) => {
-        ReactDOM.render(
-            <OverviewForm1 csrf={csrf} />, 
-            document.querySelector("#characterInfoContent")
-        );
-    //});
+    ReactDOM.render(
+        <OverviewForm1 csrf={csrf} />, 
+        document.querySelector("#characterInfoContent")
+    );
+   
 };
 
 // FORM 2 ***
 // Return overview form 2
 const OverviewForm2 = (props) => {
     return ( 
-        <form id="domoForm" name="domoForm" action="/searchCharacter" method="POST" className="domoForm">
-            <div id="searchCharacterName">
-                <label for="name">Name: </label>
-                <input id="domoName" type="text" name="name" placeholder="Character"/>  
+        <form id="form2-character">
+            <div id="form2-header" className="textDiv">
+                <h2 id="form-characterName" className="characterName" className={props.class}>Character Name</h2>
+                <h3 id="form-characterRealm" className="characterRealm">REALM</h3>
             </div>
-            
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Add Character" />
+            <div id="form2-image" className="imgDiv">
+            </div> 
         </form>
     );
 };
@@ -158,19 +149,18 @@ const createOverview2 = (csrf) => {
 // Return overview form 3
 const OverviewForm3 = (props) => {
     return ( 
-        <form id="domoForm" name="domoForm" action="/searchCharacter" method="POST" className="domoForm">
-            <div id="searchCharacterName">
-                <label for="name">Name: </label>
-                <input id="domoName" type="text" name="name" placeholder="Character"/>  
+        <form id="form2-character">
+            <div id="form2-header" className="textDiv">
+                <h2 id="form-characterName" className="characterName" className={props.class}>Character Name</h2>
+                <h3 id="form-characterRealm" className="characterRealm">RANK</h3>
             </div>
-            
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Add Character" />
+            <div id="form3-image" className="imgDiv">
+            </div> 
         </form>
     );
 };
 
-// render character overview form 3
+// Render character overview form 3
 const createOverview3 = (csrf) => {
     ReactDOM.render(
         <OverviewForm3 csrf={csrf} />,
@@ -180,7 +170,6 @@ const createOverview3 = (csrf) => {
 
 // Change password modal
 const PasswordChange = (props) => {
-    console.log('in react component');
     return(
         <form id="passwordForm" 
             name="passwordForm"
@@ -230,7 +219,7 @@ const createPasswordChange = (csrf) => {
     );
 };
 
-// Render components: add character form, character list, overview, raid progression, pvp
+// Render components
 const setup = function(csrf) {
     ReactDOM.render(
         <DomoForm csrf={csrf} />, document.querySelector("#addCharacter")
@@ -256,7 +245,7 @@ const setup = function(csrf) {
         //e.preventDefault();
         //createOverview2(csrf);
        // return false;
-       createPasswordChange(csrf);
+       createOverview2(csrf);
     });
 
     overviewBtn3.addEventListener("click", (e) => {

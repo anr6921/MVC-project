@@ -1,5 +1,4 @@
 "use strict";
-"use strict";
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -54,15 +53,7 @@ var DomoForm = function DomoForm(props) {
 // Return character list 
 var DomoList = function DomoList(props) {
     if (props.domos.length === 0) {
-        return React.createElement(
-            "div",
-            { className: "domoList" },
-            React.createElement(
-                "h3",
-                { className: "emptyDomo" },
-                "No Domos yeet"
-            )
-        );
+        return React.createElement("div", { className: "domoList" });
     };
 
     var domoNodes = props.domos.map(function (domo) {
@@ -81,9 +72,7 @@ var DomoList = function DomoList(props) {
                     "h3",
                     _defineProperty({ className: "characterName" }, "className", domo.class),
                     domo.name,
-                    React.createElement("input", { onClick: function onClick() {
-                            return setupCharacter(domo.name, domo.age);
-                        }, type: "radio", name: "radio", id: domo.name, value: domo.age })
+                    React.createElement("input", { onclick: "radioClick()", type: "radio", name: "radio", id: domo.name, value: domo.age })
                 ),
                 React.createElement(
                     "h3",
@@ -131,50 +120,39 @@ var handleSearch = function handleSearch(e) {
     redirect({ redirect: '/maker' });
     return false;
 };
+
 // FORM 1 ***
 // Return overview form 1
 var OverviewForm1 = function OverviewForm1(props) {
-    console.log('in overview form1');
-    console.dir(props);
-    return (
-        /*
-        <form id="domoForm" name="domoForm" action="/searchCharacter" method="POST" className="domoForm">
-            
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="makeDomoSubmit" type="submit" value="Add Character" />
-        </form>*/
+    return React.createElement(
+        "form",
+        { id: "form1-character" },
         React.createElement(
-            "form",
-            { id: "form1-character" },
+            "div",
+            { id: "form1-header", className: "textDiv" },
             React.createElement(
-                "div",
-                { id: "form1-header", className: "textDiv" },
-                React.createElement(
-                    "h2",
-                    _defineProperty({ id: "form1-characterName", className: "characterName" }, "className", props.class),
-                    "Character Name"
-                ),
-                React.createElement(
-                    "h3",
-                    { id: "form1-characterLevel", className: "characterLevel" },
-                    "XXX CLASS"
-                ),
-                React.createElement(
-                    "h3",
-                    { id: "form1-characterRealm", className: "characterRealm" },
-                    "REALM"
-                )
+                "h2",
+                _defineProperty({ id: "form-characterName", className: "characterName" }, "className", props.class),
+                "Character Name"
             ),
-            React.createElement("div", { id: "form1-image", className: "imgDiv" })
-        )
+            React.createElement(
+                "h3",
+                { id: "form-characterLevel", className: "characterLevel" },
+                "XXX CLASS"
+            ),
+            React.createElement(
+                "h3",
+                { id: "form-characterRealm", className: "characterRealm" },
+                "REALM"
+            )
+        ),
+        React.createElement("div", { id: "form1-image", className: "imgDiv" })
     );
 };
 
-// render character overview form 1
+// Render character overview form 1
 var createOverview1 = function createOverview1(csrf) {
-    //sendAjax('POST', '/searchCharacter', null, (data) => {
     ReactDOM.render(React.createElement(OverviewForm1, { csrf: csrf }), document.querySelector("#characterInfoContent"));
-    //});
 };
 
 // FORM 2 ***
@@ -182,19 +160,22 @@ var createOverview1 = function createOverview1(csrf) {
 var OverviewForm2 = function OverviewForm2(props) {
     return React.createElement(
         "form",
-        { id: "domoForm", name: "domoForm", action: "/searchCharacter", method: "POST", className: "domoForm" },
+        { id: "form2-character" },
         React.createElement(
             "div",
-            { id: "searchCharacterName" },
+            { id: "form2-header", className: "textDiv" },
             React.createElement(
-                "label",
-                { "for": "name" },
-                "Name: "
+                "h2",
+                _defineProperty({ id: "form-characterName", className: "characterName" }, "className", props.class),
+                "Character Name"
             ),
-            React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Character" })
+            React.createElement(
+                "h3",
+                { id: "form-characterRealm", className: "characterRealm" },
+                "REALM"
+            )
         ),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Add Character" })
+        React.createElement("div", { id: "form2-image", className: "imgDiv" })
     );
 };
 
@@ -208,30 +189,32 @@ var createOverview2 = function createOverview2(csrf) {
 var OverviewForm3 = function OverviewForm3(props) {
     return React.createElement(
         "form",
-        { id: "domoForm", name: "domoForm", action: "/searchCharacter", method: "POST", className: "domoForm" },
+        { id: "form2-character" },
         React.createElement(
             "div",
-            { id: "searchCharacterName" },
+            { id: "form2-header", className: "textDiv" },
             React.createElement(
-                "label",
-                { "for": "name" },
-                "Name: "
+                "h2",
+                _defineProperty({ id: "form-characterName", className: "characterName" }, "className", props.class),
+                "Character Name"
             ),
-            React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Character" })
+            React.createElement(
+                "h3",
+                { id: "form-characterRealm", className: "characterRealm" },
+                "RANK"
+            )
         ),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Add Character" })
+        React.createElement("div", { id: "form3-image", className: "imgDiv" })
     );
 };
 
-// render character overview form 3
+// Render character overview form 3
 var createOverview3 = function createOverview3(csrf) {
     ReactDOM.render(React.createElement(OverviewForm3, { csrf: csrf }), document.querySelector("#characterInfoContent"));
 };
 
 // Change password modal
 var PasswordChange = function PasswordChange(props) {
-    console.log('in react component');
     return React.createElement(
         "form",
         { id: "passwordForm",
@@ -294,7 +277,7 @@ var createPasswordChange = function createPasswordChange(csrf) {
     ReactDOM.render(React.createElement(PasswordChange, { csrf: csrf }), document.querySelector("#changePassContent"));
 };
 
-// Render components: add character form, character list, overview, raid progression, pvp
+// Render components
 var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#addCharacter"));
 
@@ -316,7 +299,7 @@ var setup = function setup(csrf) {
         //e.preventDefault();
         //createOverview2(csrf);
         // return false;
-        createPasswordChange(csrf);
+        createOverview2(csrf);
     });
 
     overviewBtn3.addEventListener("click", function (e) {

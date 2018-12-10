@@ -36,8 +36,8 @@
     // handle saved character selection
     function radioClick(){
       var radios = document.getElementsByName('radio');
-
-      for (var i = 0, length = radios.length; i < length; i++){
+      console.dir(radios);
+      for (var i = 0, length = radios.length; i <= length; i++){
         if (radios[i].checked){
           var radioValue = $("input[name='radio']:checked").val();
           console.log(radioValue);
@@ -50,12 +50,13 @@
     };
 
     function setupCharacter(name, realm){
-        const characterData = getCharacter(name, realm);
-        console.dir(characterData);
-
-
+      //const characterData = getCharacter(name, realm);
+      console.dir(characterData);
+      var nameContainer = document.getElementById('characterName');
+      nameContainer.innerHTML = name;
     };
 
+    /*
     function getCharacter(name, realm){
       //const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
       //const results = blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
@@ -80,7 +81,7 @@
           res.end();
           return res.status(400).json({ error: 'an error has occured' });
       });
-    };
+    };*/
   </script>
 </head>
 <body>

@@ -84,8 +84,6 @@ const signup = (request, response) => {
 
 // change password
 const changePassword = (request, response) => {
-  console.log('in change password controller function');
-  console.dir(request);
   const req = request;
   const res = response;
 
@@ -104,8 +102,6 @@ const changePassword = (request, response) => {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
 
-  console.log('username: '+req.body.username);
-  console.log('pass: '+req.body.pass);
     // generate encryption with hash and salt
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
     const accountData = {
@@ -113,24 +109,23 @@ const changePassword = (request, response) => {
       salt,
       password: hash,
     };
-    console.dir(accountData);
     // force cast to strings to cover some security flaws
-  const username = `${req.body.username}`;
-  const password = `${req.body.pass}`;
+    const username = `${req.body.username}`;
+    const password = `${req.body.pass}`;
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'All fields requiered' });
-  }
-
-  return Account.AccountModel.changePassword(accountData, (err, account) => {
-    if (err || !account) {
-      return res.status(401).json({ error: 'Wrong username' });
+    if (!username || !password) {
+      return res.status(400).json({ error: 'All fields requiered' });
     }
 
-    req.session.account = Account.AccountModel.toAPI(account);
+    return Account.AccountModel.changePassword(accountData, (err, account) => {
+      if (err || !account) {
+        return res.status(401).json({ error: 'Wrong username' });
+      }
 
-    return res.json({ redirect: '/maker' });
-  });
+      req.session.account = Account.AccountModel.toAPI(account);
+
+      return res.json({ redirect: '/maker' });
+    });
   });
 };
 

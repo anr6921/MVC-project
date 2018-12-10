@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const _ = require('underscore');
-const blizzard = require('blizzard.js').initialize({ apikey: "eukzkp99e87djznr4s5ppgu6vgs5cgwp" });
+const blizzard = require('blizzard.js').initialize({ apikey: 'eukzkp99e87djznr4s5ppgu6vgs5cgwp' });
 
 let DomoModel = {};
 
@@ -61,15 +61,15 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
 };
 
 const FindCharacter = (realm, name) => {
-  //let search = blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' })
-  //console.log(search);
-  //console.log(blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' }))
+  // let search = blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' })
+  // console.log(search);
+  // console.log(blizzard.wow.character(['profile'], { origin: 'us', realm: 'Proudmoore', name: 'Vaeze' }))
   console.log('in find character');
-  console.log('REALM: '+realm);
-  console.log('NAME: '+name);
-  
-  return blizzard.wow.character(['profile'], { origin: 'us', realm: realm , name: name });
-}
+  console.log(`REALM: ${realm}`);
+  console.log(`NAME: ${name}`);
+
+  return blizzard.wow.character(['profile'], { origin: 'us', realm, name });
+};
 
 DomoModel = mongoose.model('Domo', DomoSchema);
 
